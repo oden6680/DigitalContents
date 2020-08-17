@@ -1,30 +1,3 @@
-void enemyCommand() {
-  int command;
-  if (enemyStatus[1] == 0) {
-    command = int(random(2));
-  } else if (enemyStatus[1] <= 1) {
-    command = int(random(3));
-  } else {
-    command = int(random(4));
-  }
-
-  if (command == 0) {
-    //charge
-    enemyStatus[1] += 1;
-    enemyStatus[2] = 0;
-  } else if (command == 1) {
-    //gard
-    enemyStatus[2] = -1;
-  } else if (command == 2) {
-    //atack
-    enemyStatus[1] -= 1;
-    enemyStatus[2] = 1;
-  } else {
-    //special
-    enemyStatus[1] -= 2;
-    enemyStatus[2] = 1;
-  }
-}
 
 void calcHitpoint() {
   if (myStatus[2] == 0) {
@@ -50,24 +23,34 @@ void calcHitpoint() {
   }
 }
 
-void setMyCharacter(Character myChara){
-  myStatus[0] = myChara.HP;
-  myStatus[1] = myChara.MP;
-  MyCharacter = myChara.img;
+void setMyCharacter() {
+  myStatus[0] = MyChara.HP;
+  myStatus[1] = MyChara.MP;
+  MyCharacter = MyChara.img;
 }
 
-void setEnemyCharacter(Character enemyChara){
-  enemyStatus[0] = enemyChara.HP;
-  enemyStatus[1] = enemyChara.MP;
-  EnemyCharacter = enemyChara.img;
+void setEnemyCharacter() {
+  enemyStatus[0] = EnemyChara.HP;
+  enemyStatus[1] = EnemyChara.MP;
+  EnemyCharacter = EnemyChara.img;
 }
 
 void reset() {
-  myStatus[0] = 5;
-  myStatus[1] = 0;
-  myStatus[2] = 0;
+  turn = 1;
+  calc = false;
+  interval = false;
+  charaStatus = false;
+  error = false;
+}
 
-  enemyStatus[0] = 5;
-  enemyStatus[1] = 0;
-  enemyStatus[2] = 0;
+void buttonMusic(){
+  player2.play( 0 );
+}
+
+void statusMusic(){
+  player4.play( 0 );
+}
+
+void cancelMusic(){
+  player3.play( 0 );
 }

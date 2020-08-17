@@ -1,6 +1,9 @@
 class Select{
   PImage lock = loadImage("lock.png");
   void display(){
+    if( player5.isPlaying() == false ){
+     player5.play( 0 );
+    }
     charaList[0].setGet();
     int row = -1;
     int line = 0;

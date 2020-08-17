@@ -1,4 +1,0 @@
-class HowToPlay{
-  void display(){
-  }
-}

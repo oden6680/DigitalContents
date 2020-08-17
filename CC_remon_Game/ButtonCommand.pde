@@ -2,80 +2,101 @@ void mousePressed() {
   if (scen == 0) {
     if (button[0].isPush()) {
       scen = 1;
+      buttonMusic();
     }
     if (button[1].isPush()) {
       scen = 11;
-    }
-    if (button[2].isPush()) {
-      scen = 21;
+      buttonMusic();
     }
   }
   
   if (scen == 1){
     for(int i = 0; i < charaList.length; i ++){
       if(!charaStatus && button[20+2*i].isPush() && charaList[i].getGet()){
-        setMyCharacter(charaList[i]);
-        setEnemyCharacter(charaList[int(random(7))]);
+        buttonMusic();
+        MyChara = charaList[i];
+        EnemyChara = charaList[int(random(8))];
+        setMyCharacter();
+        setEnemyCharacter();
+        MyChara.setUp(1);
+        EnemyChara.setUp(2);
         scen = 2;
       }
       if(button[21+2*i].isPush() && charaList[i].getGet()){
+        statusMusic();
         charaStatus = true;
         StatusImg = charaList[i].img;
       }
       if(charaStatus && button[39].isPush()){
+        cancelMusic();
         charaStatus = false;
       }
     }
   }
 
   if (scen == 2) {
-    if (button[3].isPush()) {
+    if (button[3].isPush() && !interval) {
+      buttonMusic();
       myStatus[1] += 1;
       myStatus[2] = 0;
-      enemyCommand();
+      commandText = "溜める";
+      battle.action = true;
       calc = true;
     }
 
-    if (button[4].isPush()) {
+    if (button[4].isPush() && !interval) {
+      buttonMusic();
       if (myStatus[1] <= 0) {
-        fill(255, 255, 100);
-        textSize(30);
-        text("攻撃をするにはエネルギーが1以上必要です", width/2, height/2);
+        error = true;
       } else {
         myStatus[1] -= 1;
         myStatus[2] = 1;
-        enemyCommand();
+        commandText = "攻撃";
+        battle.action = true;
         calc = true;
       }
     } 
 
-    if (button[5].isPush()) {
+    if (button[5].isPush() && !interval) {
+      buttonMusic();
       myStatus[2] = -1;
-      enemyCommand();
+      commandText = "防御";
+      battle.action = true;
       calc = true;
     }
 
-    if (button[6].isPush()) {
-      if (myStatus[1] <= 1) {
-        fill(255, 255, 100);
-        textSize(30);
-        text("攻撃をするにはエネルギーが2以上必要です", width/2, height/2);
+    if (button[6].isPush() && !interval) {
+      buttonMusic();
+      if (myStatus[1] < MyChara.needMP) {
+        error = true;
       } else {
-        myStatus[1] -= 2;
-        myStatus[2] = 2;
-        enemyCommand();
+        commandText = "必殺技";
+        MyChara.special(1);
+        battle.action = true;
         calc = true;
       }
     }
+    
+    if(button[7].isPush() && interval){
+      buttonMusic();
+      turn += 1;
+      interval = false;
+    }
+    
+    if(button[8].isPush() && !interval && error){
+      cancelMusic();
+      error = false;
+    }
+    
   }
 
   if (scen == 3) {
-    if (button[7].isPush()) {
+    if (button[9].isPush()) {
       reset();
       scen = 1;
     }
 
-    if (button[8].isPush()) {
+    if (button[10].isPush()) {
       reset();
       scen = 0;
     }
@@ -92,7 +113,7 @@ void mousePressed() {
   
   if(scen == 12){
     if(mousePressed && mouseX > 300 && mouseX < 600){
-      chara = int(random(7));
+      chara = int(random(charaList.length));
       scen = 13;
     }
   }
