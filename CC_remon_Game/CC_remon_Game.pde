@@ -67,7 +67,6 @@ void setup() {
   PImage chara6 = loadImage("teachers.png");
   PImage chara7 = loadImage("god.jpg");
   PImage chara8 = loadImage("pachinkasu.jpg");
-  PImage chara9 = loadImage("superchiba.jpg");
   
   charaList = new Character[8];
   charaList[0] = new Character1(3,0,"sausage",chara1,2);

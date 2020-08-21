@@ -88,6 +88,8 @@ class Character3 extends Character{
       super(HP0,MP0,Name0,img0,needMP0);
   }
   void setUp(int n){
+    enemyStatus[0] -= 1;
+    myStatus[0] -= 1;
   }
   
   void special(int n){
